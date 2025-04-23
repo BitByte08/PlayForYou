@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import {useParams} from "next/navigation";
 import {usePlaylistStore} from "@/stores/playlistStore";
+import {musicType} from "@/type";
 
 const socket = io('http://localhost:4000');
 
@@ -10,7 +11,6 @@ export default function Home() {
     const params = useParams();
     const roomId = params.roomId as string;
     const [videoUrl, setVideoUrl] = useState('');
-    const playlist = usePlaylistStore(state => state.playlist);
     const {setPlaylist, addPlaylist} = usePlaylistStore(state => state.actions);
     useEffect(() => {
         socket.emit('join_room', roomId);

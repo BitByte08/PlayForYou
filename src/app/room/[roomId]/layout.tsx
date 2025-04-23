@@ -1,7 +1,8 @@
 // app/room/[id]/layout.tsx
 'use client'
-import {ReactNode, useState} from 'react'
+import {ReactNode} from 'react'
 import {usePlaylistStore} from "@/stores/playlistStore";
+import {musicType} from "@/type";
 
 export default function RoomLayout({ children }: { children: ReactNode }) {
     const playlist = usePlaylistStore(state => state.playlist);
