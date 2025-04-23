@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import {useParams} from "next/navigation";
 import {usePlaylistStore} from "@/stores/playlistStore";
 import {musicType} from "@/type";
+import VideoPlayer from "@/components/VideoPlayer";
 
 const socket = io('http://localhost:4000');
 
@@ -11,7 +12,13 @@ export default function Home() {
     const params = useParams();
     const roomId = params.roomId as string;
     const [videoUrl, setVideoUrl] = useState('');
-    const {setPlaylist, addPlaylist} = usePlaylistStore(state => state.actions);
+    const [playSing, setPlaySing] = useState("");
+    const playlist = usePlaylistStore(state => state.playlist);
+    const {setPlaylist, addPlaylist, getFirstSong} = usePlaylistStore(state => state.actions);
+    useEffect(() => {
+        if(playlist[0] != undefined)
+            setPlaySing(playlist[0].url);
+    }, [playlist]);
     useEffect(() => {
         socket.emit('join_room', roomId);
 
@@ -47,6 +54,7 @@ export default function Home() {
                 placeholder="YouTube 링크"
             />
             <button onClick={handleAdd}>추가</button>
+            <VideoPlayer videoUrl={playSing}></VideoPlayer>
         </div>
     );
 }

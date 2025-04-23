@@ -1,5 +1,6 @@
 // stores/playlistStore.ts
 import { create } from 'zustand'
+import {musicType} from "@/type";
 
 type PlaylistState = {
     playlist: musicType[]
@@ -10,13 +11,15 @@ type PlaylistActions = {
     actions: {
         setPlaylist: (list: musicType[]) => void
         addPlaylist: (music: musicType) => void
+        getFirstSong: () => musicType
     }
 }
 
-export const usePlaylistStore = create<PlaylistState & PlaylistActions>((set) => ({
+export const usePlaylistStore = create<PlaylistState & PlaylistActions>((set,get) => ({
     playlist: [],
     actions: {
         setPlaylist: (list) => set({ playlist: list }),
-        addPlaylist: (music: musicType) => set((state)=>({playlist: [...state.playlist, music]}))
+        addPlaylist: (music: musicType) => set((state)=>({playlist: [...state.playlist, music]})),
+        getFirstSong: (()=> get().playlist[0])
     }
 }))
