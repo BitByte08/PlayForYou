@@ -1,4 +1,9 @@
 export type musicType = {
     name: string,
-    url: string
+    id: string
+}
+export type responseType = {
+    videoId: string,
+    title: string,
+    thumbnail: string,
 }
