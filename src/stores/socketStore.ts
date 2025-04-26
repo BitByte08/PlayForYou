@@ -13,7 +13,7 @@ export const useSocketStore = create<SocketStore>((set) => ({
     socket: null,
     actions: {
         connect: () => {
-            const socket = io('http://localhost:4000');
+            const socket = io(`http://${process.env.NEXT_PUBLIC_BACKEND}:4000`);
             set({socket});
 
             // 기본 이벤트 등록도 여기서 할 수 있어
