@@ -53,6 +53,7 @@ export default function HomePage() {
         const fetchSession = async () => {
             const { data } = await supabase.auth.getSession();
             setSession(data.session);
+            console.log(data);
         };
 
         fetchSession();
