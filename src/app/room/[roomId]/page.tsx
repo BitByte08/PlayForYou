@@ -8,6 +8,7 @@ import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
 import SearchSection from "@/components/search";
 import NowPlaying from "@/components/player";
+import { useUserStore } from '@/stores/userStore';
 
 interface MusicData {
   name: string;
@@ -31,7 +32,7 @@ export default function Home() {
   const playlist = usePlaylistStore(state => state.playlist);
   const { setPlaylist, addPlaylist } = usePlaylistStore(state => state.actions);
   const [fir, setFir] = useState<boolean>(false);
-
+  const {setRoomId, clearRoomId} = useUserStore();
   useEffect(() => {
     if (socket === null) connect();
   }, [socket]);
@@ -44,15 +45,18 @@ export default function Home() {
 
       socket.emit('join_room', roomId);
       socket.emit('get_music', roomId);
-
-      socket.on('playlist', (playlist: musicType[]) => {
-        setPlaylist(playlist);
+      setRoomId(roomId);
+      socket.on('playlist', (resPlaylist: musicType[]) => {
+        if(playlist!=resPlaylist)
+        setPlaylist(resPlaylist);
       });
 
       socket.on('music_state', (state: RoomState) => {
         if (state?.currentMusic) {
-          setPlaySing(state.currentMusic.id);
-          setPlayParams(state.startedAt);
+          if(state.currentMusic.id !== playSing) {
+            setPlaySing(state.currentMusic.id);
+            setPlayParams(state.startedAt);
+          }
         } else {
           setPlaySing('');
           setPlayParams(0);
@@ -60,6 +64,7 @@ export default function Home() {
       });
 
       socket.on("room_deleted", () => {
+        clearRoomId();
         alert("이 방은 삭제되었습니다.");
         router.push("/"); // 메인 페이지 등으로 이동
       });
@@ -97,15 +102,15 @@ export default function Home() {
   let duration = 10;
 
   return (
-    <div className="flex h-full w-full">
+    <main className="flex h-full w-full">
       {/* 오른쪽 메인 영역 */}
       <div className="flex-1 p-4 space-y-4 overflow-auto">
-        <NowPlaying
+        {/* <NowPlaying
           title={currentMusic?.name || '재생 중인 곡 없음'}
           thumbnail={`https://i.ytimg.com/vi/${currentMusic?.id}/mqdefault.jpg`}
           elapsed={elapsed}
           duration={duration}
-        />
+        /> */}
         <VideoPlayer
           videoUrl={memoizedVideoUrl}
           params={memoizedPlayParams}
@@ -114,7 +119,6 @@ export default function Home() {
         />
       </div>
       {/* 왼쪽 툴바 */}
-      <SearchSection roomId={roomId} />
-    </div>
+    </main>
   );
 }

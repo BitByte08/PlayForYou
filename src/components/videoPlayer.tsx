@@ -36,7 +36,11 @@ export default function VideoPlayer(props: VideoPlayerProps) {
                 clearInterval(setMute);
             }
         },1000)
-        playerRef.current.unMute();
+        try{
+            playerRef.current.unMute();
+        }catch(e){
+
+        }
     };
     const onPlayerReady = (event: any) => {
         playerRef.current = event.target;
@@ -75,7 +79,7 @@ export default function VideoPlayer(props: VideoPlayerProps) {
                     onReady={onPlayerReady}
                     onEnd={() => {props.handleVideoEnd()}}
                 ></YouTube>
-                <button onClick={() => {playerRef.current.playVideo();}}>play</button>
+                <button onClick={() => {props.handleVideoEnd();}} className='text-default '>skip</button>
             </div>
         );
     }
