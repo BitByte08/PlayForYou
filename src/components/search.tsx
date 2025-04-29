@@ -9,7 +9,7 @@ export default function SearchSection(props) {
     const [results, setResults] = useState<any[]>([]);
     const socket = useSocketStore(state => state.socket);
     const handleSearch = async () => {
-        const res = await axios.get(`http://${process.env.NEXT_PUBLIC_BACKEND}/search?q=` + query); // Next.js에서 프록시 설정도 가능
+        const res = await axios.get(`http://${process.env.NEXT_PUBLIC_BACKEND}:4000/search?q=` + query); // Next.js에서 프록시 설정도 가능
         setResults(res.data);
     };
     const handleAdd = (title:string, videoId:string) => {

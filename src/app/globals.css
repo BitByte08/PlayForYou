@@ -1,21 +1,19 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --background: #f3f4f6;
+  --foreground: #101828;
+  --border-color: #d1d5dc; /* 밝은 테두리 색 */
+  --text-color: #e5e7eb;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #101828;
+    --foreground: #f3f4f6;
+    --border-color: #4a5568; /* 어두운 테두리 색 */
+    --text-color: #364153;
   }
 }
 
@@ -24,3 +22,12 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer utilities {
+  .border-default {
+    @apply border border-[var(--border-color)];
+  }
+  .text-default {
+    @apply text-[var(--text-color)];
+  }
+} 
