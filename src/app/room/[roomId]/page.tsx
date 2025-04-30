@@ -30,7 +30,7 @@ export default function Home() {
   useEffect(() => {
     if (socket === null) connect();
   }, [socket, connect]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (socket) {
       const Handle = (event: { preventDefault: () => void; }) => {
@@ -70,7 +70,7 @@ export default function Home() {
         socket.off('video_added');
       };
     }
-  }, [socket, roomId, connect, disconnect, setPlaylist, setRoomId, clearPlaylist, playlist, clearRoomId]);
+  }, [socket]);
 
 
   // handleVideoEnd는 socket에 접근하므로 useCallback을 사용하여 최적화
