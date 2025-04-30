@@ -1,9 +1,11 @@
 # 1단계: 빌드
 FROM node:18-alpine AS builder
 WORKDIR /app
-COPY . .
+# 1단계: 빌드
+COPY package*.json ./
 RUN npm install
-RUN npm run build  # ✅ 이게 중요
+
+COPY . .
 
 # 2단계: 실행
 FROM node:18-alpine
