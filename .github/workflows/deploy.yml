@@ -43,7 +43,9 @@ jobs:
             cd ~/PlayForYou/frontend
 
             # .env.local 생성 (줄바꿈 깨지지 않게)
-            echo "${{ secrets.FRONT_ENV_PROD }}" | tr '\r' '\n' > .env.local
+            cat <<EOF > .env
+            ${{ secrets.FRONT_ENV_PROD }}
+            EOF
 
             docker-compose down
             docker-compose up -d --build
