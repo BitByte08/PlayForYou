@@ -32,7 +32,11 @@ jobs:
           rm: true
           strip_components: 0
           exclude: ".git"
-
+      - name : Create .env.local
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env.local
+          echo "NEXT_PUBLIC_BACKEND=${{ secrets.BACKEND }}" >> .env.local
       - name: SSH and deploy frontend
         uses: appleboy/ssh-action@master
         with:
@@ -42,10 +46,6 @@ jobs:
           script: |
             cd ~/PlayForYou/frontend
 
-            # .env.local 생성 (줄바꿈 깨지지 않게)
-            cat <<EOF > .env
-            ${{ secrets.FRONT_ENV_PROD }}
-            EOF
 
             docker-compose down
             docker-compose up -d --build
