@@ -9,5 +9,5 @@ RUN npm run build  # ✅ 이게 중요
 FROM node:18-alpine
 WORKDIR /app
 COPY --from=builder /app ./
-EXPOSE 3000
-CMD ["npm", "start"]
+EXPOSE 3001
+CMD ["npm", "run", "start"]

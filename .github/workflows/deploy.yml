@@ -1,0 +1,40 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Upload frontend project (excluding .git)
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "./*"
+          target: "~/PlayForYou/frontend"
+          rm: true
+          strip_components: 0
+          exclude: ".git"
+
+      - name: SSH and deploy frontend
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/PlayForYou/frontend
+
+            # .env.production 생성
+            echo "${{ secrets.FRONT_ENV_PROD }}" > .env.local
+
+            docker-compose down
+            docker-compose up -d --build
