@@ -41,7 +41,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/PlayForYou/frontend
-            echo "${{ secrets.FRONT_ENV_PROD }}" >> .env.local
+            cat << 'EOF' > .env.local
+            ${{ secrets.FRONT_ENV_PROD }}
+            EOF
 
 
             docker-compose down
