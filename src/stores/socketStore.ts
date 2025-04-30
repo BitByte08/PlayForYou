@@ -15,7 +15,7 @@ export const useSocketStore = create<SocketStore>((set) => ({
         connect: () => {
             const socket = io(`${process.env.NEXT_PUBLIC_BACKEND}`);
             set({socket});
-
+            console.log(`${process.env.NEXT_PUBLIC_BACKEND}`);
             // 기본 이벤트 등록도 여기서 할 수 있어
             socket.on('connect', () => {
                 console.log('✅ 소켓 연결됨:', socket.id);
