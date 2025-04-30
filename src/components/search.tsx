@@ -19,10 +19,6 @@ export default function Search(props) {
             socket.emit('add_music', { roomId: roomId, musicInfo: {name:title,id:videoId} });
 
     };
-
-    useEffect(() => {
-        console.log(results);
-    },[results]);
     return (
         <>
             <div className="sticky top-0 background-default text-default">

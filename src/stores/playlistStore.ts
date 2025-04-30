@@ -11,6 +11,7 @@ type PlaylistActions = {
     actions: {
         setPlaylist: (list: musicType[]) => void
         addPlaylist: (music: musicType) => void
+        clearPlaylist: () => void,
         getFirstSong: () => musicType
     }
 }
@@ -18,8 +19,9 @@ type PlaylistActions = {
 export const usePlaylistStore = create<PlaylistState & PlaylistActions>((set,get) => ({
     playlist: [],
     actions: {
-        setPlaylist: (list) => set({ playlist: list }),
+        setPlaylist: (list) => set({ playlist: [...list] }),
         addPlaylist: (music: musicType) => set((state)=>({playlist: [...state.playlist, music]})),
+        clearPlaylist: () => set({ playlist: undefined }),
         getFirstSong: (()=> get().playlist[0])
     }
 }))

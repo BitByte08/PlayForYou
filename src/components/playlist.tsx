@@ -1,4 +1,5 @@
 'use client';
+import { usePlaylistStore } from "@/stores/playlistStore";
 import { useSocketStore } from "@/stores/socketStore";
 import { useState, useEffect } from "react";
 interface MusicData {
@@ -7,12 +8,8 @@ interface MusicData {
 };
 export const Playlist = () => {
     const socket = useSocketStore(state => state.socket);
-    const [playlist, setPlaylist] = useState<MusicData[]>();
-    useEffect(() => {
-        socket?.on('playlist', (resPlaylist: MusicData[]) => {
-            setPlaylist(resPlaylist);
-        });
-    },[socket])
+    const playlist = usePlaylistStore(state => state.playlist);
+    const {setPlaylist} = usePlaylistStore(state => state.actions);
     return (
         <div className="playlist">
             {playlist?.length<=0 && <h2>플레이리스트가 비어있어요.</h2>}

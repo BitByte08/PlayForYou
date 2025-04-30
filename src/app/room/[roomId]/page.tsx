@@ -30,7 +30,7 @@ export default function Home() {
   const [playSing, setPlaySing] = useState('');
   const [playParams, setPlayParams] = useState<number>(0);
   const playlist = usePlaylistStore(state => state.playlist);
-  const { setPlaylist, addPlaylist } = usePlaylistStore(state => state.actions);
+  const { setPlaylist, clearPlaylist } = usePlaylistStore(state => state.actions);
   const [fir, setFir] = useState<boolean>(false);
   const {setRoomId, clearRoomId} = useUserStore();
   useEffect(() => {
@@ -40,9 +40,12 @@ export default function Home() {
   useEffect(() => {
     if (socket) {
       const Handle = (event) => {
+        clearPlaylist();
         socket.emit('leave_room', roomId);
       };
-
+      socket?.on('playlist', (resPlaylist: MusicData[]) => {
+        setPlaylist(resPlaylist);
+      });
       socket.emit('join_room', roomId);
       socket.emit('get_music', roomId);
       setRoomId(roomId);
@@ -51,17 +54,7 @@ export default function Home() {
         setPlaylist(resPlaylist);
       });
 
-      socket.on('music_state', (state: RoomState) => {
-        if (state?.currentMusic) {
-          if(state.currentMusic.id !== playSing) {
-            setPlaySing(state.currentMusic.id);
-            setPlayParams(state.startedAt);
-          }
-        } else {
-          setPlaySing('');
-          setPlayParams(0);
-        }
-      });
+      
 
       socket.on("room_deleted", () => {
         clearRoomId();
@@ -74,9 +67,10 @@ export default function Home() {
 
       return () => {
         window.removeEventListener('beforeunload', Handle);
+        clearPlaylist();
         socket.emit('leave_room', roomId);
         socket.off('leave_room');
-        socket.off("room-deleted");
+        socket.off("room_deleted");
         socket.off('init_playlist');
         socket.off('video_added');
       };
@@ -88,13 +82,9 @@ export default function Home() {
   }, [playSing]);
 
   // handleVideoEnd는 socket에 접근하므로 useCallback을 사용하여 최적화
-  const handleVideoEnd = useCallback(() => {
+  const handleVideoEnd = () => {
     if (socket) socket.emit('end_music', roomId);
-  }, [socket, roomId]);
-
-  // Memoized videoUrl and playParams to avoid unnecessary re-renders
-  const memoizedVideoUrl = useMemo(() => playSing, [playSing]);
-  const memoizedPlayParams = useMemo(() => playParams, [playParams]);
+  };
 
   // 가상 음악 데이터 설정 (현재는 예시로 넣은 것)
   let currentMusic;
@@ -111,12 +101,7 @@ export default function Home() {
           elapsed={elapsed}
           duration={duration}
         /> */}
-        <VideoPlayer
-          videoUrl={memoizedVideoUrl}
-          params={memoizedPlayParams}
-          handleVideoEnd={handleVideoEnd}
-          reload={true}
-        />
+        <VideoPlayer />
       </div>
       {/* 왼쪽 툴바 */}
     </main>

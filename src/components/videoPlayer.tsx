@@ -1,24 +1,33 @@
 'use client';
 
-import {useEffect, useRef, useState} from 'react';
-import {useSocketStore} from "@/stores/socketStore";
-import YouTube, { YouTubePlayer} from 'react-youtube';
-import {setInterval} from "node:timers";
-import SoundModal from "@/components/soundModal";
-type VideoPlayerProps = {
-    videoUrl:string,
-    params:number,
-    handleVideoEnd:()=>void,
-    reload:boolean,
-}
-export default function VideoPlayer(props: VideoPlayerProps) {
-    const [isMuted, setIsMuted] = useState<boolean>(true);
-    const [showModal, setShowModal] = useState(true); // 모달 표시 상태
-    const [videoId, setVideoId] = useState<string | null>(null);
+import { useSocketStore } from "@/stores/socketStore";
+import { useEffect, useRef, useState } from "react";
+import SoundModal from "./soundModal";
+import YouTube, { YouTubePlayer } from "react-youtube";
+import { useUserStore } from "@/stores/userStore";
+
+interface MusicData {
+    name: string;
+    id: string;
+  }
+  
+  export interface RoomState {
+    currentMusic: MusicData;
+    startedAt: number;
+    endCount: number;
+  }
+
+export default function VideoPlayer() {
     const socket = useSocketStore(state => state.socket);
+    const roomId = useUserStore(state => state.roomId);
     const playerRef = useRef<YouTubePlayer>(undefined);
+    const [videoStartTime, setVideoStartTime] = useState<number>(0);
     const [isReady, setIsReady] = useState(false);
     const [start, setStart] = useState<number>(0);
+    const [nowPlay, setNowPlay] = useState<string>('');
+    const [isMute, setIsMute] = useState<boolean>(true);
+    const [showModal, setShowModal] = useState<boolean>(true);
+    const [nowPlayParams,setNowPlayParams] = useState<number>(Date.now());
     const handleModalClose = () => {
         setShowModal(false);
         // 유저가 클릭하면 음소거 해제
@@ -28,7 +37,7 @@ export default function VideoPlayer(props: VideoPlayerProps) {
                 try{
                     playerRef.current.unMute();
                     succes = true;
-                    setIsMuted(false);
+                    setIsMute(false);
                 }catch(e){
                     console.log(e);
                 }
@@ -47,40 +56,56 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         setIsReady(true);  // 준비 완료 상태 설정
     };
     useEffect(() => {
-        setShowModal(props.reload);
-    }, [props.reload]);
+        if (!socket) return;
+
+        const handleMusicState = (state: RoomState) => {
+            if (state?.currentMusic) {
+            setNowPlay(state.currentMusic.id);
+            setNowPlayParams(state.startedAt);
+            } else {
+            setNowPlay('');
+            setNowPlayParams(0);
+            }
+        };
+
+        socket.off('music_state', handleMusicState); // 중복 방지
+        socket.on('music_state', handleMusicState);
+
+        return () => {
+            socket.off('music_state', handleMusicState);
+        };
+    },[socket]);
     useEffect(() => {
-        if(props.videoUrl!==videoId) setVideoId(props.videoUrl);
-    }, [props.videoUrl]);
-    useEffect(() => {
-        if(props.params!==start) setStart(props.params)
-    }, [props.params]);
-    if (videoId===""||videoId==undefined) return <div>🎬 재생할 영상이 없습니다</div>;
-    else {
-        if(socket)
-            socket.emit('start_play', {videoId});
-        return (
+        if (nowPlay) {
+          const calculatedStart = Math.floor((Date.now() - nowPlayParams) / 1000);
+          setVideoStartTime(calculatedStart);
+        }
+      }, [nowPlay, nowPlayParams]);
+    const handleVideoEnd = () => {
+        if (socket) socket.emit('end_music', roomId);
+      };
+    return (
             <div className="aspect-video w-full">
                 {showModal && <SoundModal onClose={handleModalClose} />}
-                <YouTube
-                    videoId={videoId}
+                {nowPlay!==""&&<><YouTube
+                    videoId={nowPlay}
                     opts={{
                         playerVars: {
                             autoplay: 1,
-                            mute: (isMuted?1:0),
+                            mute: (isMute?1:0),
                             controls: 0,
                             rel: 0,
                             modestbranding: 1,
-                            start: (Date.now()-start)/1000,
-                            disablekb: 1,
-                            origin: window.location.origin
+                            start: videoStartTime,
+                            disablekb: 1
                         }
                     }}
                     onReady={onPlayerReady}
-                    onEnd={() => {props.handleVideoEnd()}}
+                    onEnd={() => handleVideoEnd()}
                 ></YouTube>
-                <button onClick={() => {props.handleVideoEnd();}} className='text-default '>skip</button>
+                <button onClick={() => handleVideoEnd()} className='text-default '>skip</button>
+                </>}
             </div>
         );
-    }
+    
 }
