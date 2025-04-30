@@ -1,13 +1,11 @@
 'use client'
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useParams } from "next/navigation";
 import { usePlaylistStore } from "@/stores/playlistStore";
 import { musicType } from "@/type";
 import VideoPlayer from "@/components/videoPlayer";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
-import SearchSection from "@/components/search";
-import NowPlaying from "@/components/player";
 import { useUserStore } from '@/stores/userStore';
 
 interface MusicData {
@@ -26,20 +24,16 @@ export default function Home() {
   const { connect, disconnect } = useSocketStore(state => state.actions);
   const params = useParams();
   const roomId = params.roomId as string;
-  const [videoUrl, setVideoUrl] = useState('');
-  const [playSing, setPlaySing] = useState('');
-  const [playParams, setPlayParams] = useState<number>(0);
   const playlist = usePlaylistStore(state => state.playlist);
   const { setPlaylist, clearPlaylist } = usePlaylistStore(state => state.actions);
-  const [fir, setFir] = useState<boolean>(false);
   const {setRoomId, clearRoomId} = useUserStore();
   useEffect(() => {
     if (socket === null) connect();
-  }, [socket]);
+  }, [socket, connect]);
 
   useEffect(() => {
     if (socket) {
-      const Handle = (event) => {
+      const Handle = () => {
         clearPlaylist();
         socket.emit('leave_room', roomId);
       };
@@ -75,22 +69,11 @@ export default function Home() {
         socket.off('video_added');
       };
     }
-  }, [socket, roomId, connect, disconnect, setPlaylist]);
+  }, [socket, roomId, connect, disconnect, setPlaylist, setRoomId, clearPlaylist, playlist, clearRoomId]);
 
-  useEffect(() => {
-    console.log(playSing);
-  }, [playSing]);
 
   // handleVideoEnd는 socket에 접근하므로 useCallback을 사용하여 최적화
-  const handleVideoEnd = () => {
-    if (socket) socket.emit('end_music', roomId);
-  };
-
   // 가상 음악 데이터 설정 (현재는 예시로 넣은 것)
-  let currentMusic;
-  let elapsed = 1;
-  let duration = 10;
-
   return (
     <main className="flex h-full w-full">
       {/* 오른쪽 메인 영역 */}

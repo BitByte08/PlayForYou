@@ -3,7 +3,7 @@
 import { useSocketStore } from "@/stores/socketStore";
 import { useEffect, useRef, useState } from "react";
 import SoundModal from "./soundModal";
-import YouTube, { YouTubePlayer } from "react-youtube";
+import YouTube, {YouTubeEvent, YouTubePlayer} from "react-youtube";
 import { useUserStore } from "@/stores/userStore";
 
 interface MusicData {
@@ -22,8 +22,6 @@ export default function VideoPlayer() {
     const roomId = useUserStore(state => state.roomId);
     const playerRef = useRef<YouTubePlayer>(undefined);
     const [videoStartTime, setVideoStartTime] = useState<number>(0);
-    const [isReady, setIsReady] = useState(false);
-    const [start, setStart] = useState<number>(0);
     const [nowPlay, setNowPlay] = useState<string>('');
     const [isMute, setIsMute] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(true);
@@ -48,12 +46,11 @@ export default function VideoPlayer() {
         try{
             playerRef.current.unMute();
         }catch(e){
-
+            console.error(e);
         }
     };
-    const onPlayerReady = (event: any) => {
+    const onPlayerReady = (event:YouTubeEvent) => {
         playerRef.current = event.target;
-        setIsReady(true);  // 준비 완료 상태 설정
     };
     useEffect(() => {
         if (!socket) return;

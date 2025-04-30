@@ -6,18 +6,17 @@ import supabase from "@/supabaseClient";
 import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
-    const [sidebarMode, setSidebarMode] = useState("default");
 
 
     const socket = useSocketStore(state => state.socket);
     const { connect, disconnect } = useSocketStore(state => state.actions);
     const [rooms, setRooms] = useState<string[]>([]);
-    const [session, setSession] = useState(null);
+    //const [session, setSession] = useState(null);
 
     // 서버 연결
     useEffect(() => {
         if (!socket) connect();
-    }, []);
+    }, [socket, connect]);
 
     // 소켓 이벤트 처리
     useEffect(() => {
@@ -31,18 +30,8 @@ export default function HomePage() {
             window.removeEventListener('beforeunload', disconnect);
             socket?.off('room_list');
         };
-    }, [socket]);
-
-    useEffect(() => {
-        if(sidebarMode === "create") {
-            setIsSidebarOpen(true);
-        }
-    },[sidebarMode]);
+    }, [socket, disconnect]);
     // 방 생성
-    const createRoom = () => {
-        setSidebarMode("create");
-        //socket?.emit('create_room');
-    };
 
     // 방 삭제
     const deleteRoom = (roomId: string) => {
@@ -53,7 +42,7 @@ export default function HomePage() {
     useEffect(() => {
         const fetchSession = async () => {
             const { data } = await supabase.auth.getSession();
-            setSession(data.session);
+            //setSession(data.session);
             console.log(data);
         };
 
@@ -61,10 +50,10 @@ export default function HomePage() {
     }, []);
 
     // 로그아웃
-    const handleLogout = async () => {
-        await supabase.auth.signOut();
-        setSession(null);
-    };
+    // const handleLogout = async () => {
+    //     await supabase.auth.signOut();
+    //     setSession(null);
+    // };
 
     return (
         <div className='flex flex-wrap m-6'>

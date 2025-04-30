@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // axios 추가
-
-const AuthModal = ({ isOpen, closeModal }) => {
+interface props {
+  isOpen: boolean;
+  closeModal: () => void;
+}
+const AuthModal = ({ isOpen, closeModal }:props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true); // 로그인/회원가입 토글
@@ -18,12 +21,11 @@ const AuthModal = ({ isOpen, closeModal }) => {
         : `${process.env.NEXT_PUBLIC_BACKEND}/signin`;
 
       const response = await axios.post(url, { email, password });
-
+      console.log(response);
       alert(isLogin ? '로그인 성공' : '회원가입 성공');
       closeModal(); // 모달 닫기
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setError(err.response?.data?.error || '알 수 없는 오류');
     } finally {
       setLoading(false); // 로딩 끝
     }

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Search from '../search';
 import { usePathname } from 'next/navigation';
 import { Playlist } from '../playlist';
-import { usePlaylistStore } from '@/stores/playlistStore';
 import { IoSearchOutline, IoCreateOutline, IoPersonOutline, IoMusicalNotesOutline } from "react-icons/io5";
 interface SidebarSectionProps {
     sidebarMode: string;
@@ -12,8 +11,6 @@ interface SidebarSectionProps {
     isSidebarOpen: boolean;
 }
 export const Sidebar = () => {
-    const playlist = usePlaylistStore(state => state.playlist);
-    const {clearPlaylist} = usePlaylistStore(state => state.actions);
 
     useEffect(() => {
         setTimeout(()=>{
@@ -46,7 +43,7 @@ export const Sidebar = () => {
 }
 
 const UserSection = (props:SidebarSectionProps) => {
-    const { sidebarMode, setSidebarMode, isSidebarOpen } = props;
+    const { sidebarMode, setSidebarMode } = props;
     return (
         <div className="h-fit min-h-12 border-b-1 flex flex-col">
             <span onClick={()=>setSidebarMode((sidebarMode==="user")?"default":"user")}
@@ -67,7 +64,7 @@ const UserSection = (props:SidebarSectionProps) => {
     )
 }
 const CreateRoomSection = (props:SidebarSectionProps) => {
-    const { sidebarMode, setSidebarMode, isSidebarOpen } = props;
+    const { sidebarMode, setSidebarMode } = props;
     const socket = useSocketStore(state => state.socket);
     const sendSocket = () => socket?.emit('create_room');
 
@@ -92,9 +89,7 @@ const CreateRoomSection = (props:SidebarSectionProps) => {
 }
 
 const SearchSection = (props:SidebarSectionProps) => {
-    const { sidebarMode, setSidebarMode, isSidebarOpen } = props;
-    const socket = useSocketStore(state => state.socket);
-    const sendSocket = () => socket?.emit('create_room');
+    const { sidebarMode, setSidebarMode, } = props;
     return (
         <div className="h-fit min-h-12 border-b-1 flex flex-col m-0 p-0">
                 <span onClick={()=>setSidebarMode((sidebarMode==="search")?"default":"search")}

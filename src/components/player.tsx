@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 export default function NowPlaying({ title, thumbnail, elapsed, duration }: {
     title: string;
@@ -10,7 +11,7 @@ export default function NowPlaying({ title, thumbnail, elapsed, duration }: {
 
     return (
         <div className="flex items-center bg-gray-900 text-white p-4 rounded-xl shadow-md">
-            <img src={thumbnail} alt="thumbnail" className="w-24 h-24 rounded-lg mr-4 object-cover" />
+            <Image src={thumbnail} alt="thumbnail" className="w-24 h-24 rounded-lg mr-4 object-cover" />
             <div className="flex-1">
                 <h3 className="text-lg font-semibold truncate">{title}</h3>
                 <div className="w-full bg-gray-700 h-2 rounded mt-2">

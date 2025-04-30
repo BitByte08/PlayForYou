@@ -1,17 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import {useSocketStore} from "@/stores/socketStore";
 import { useUserStore } from '@/stores/userStore';
-
-export default function Search(props) {
+import Image from "next/image";
+interface searchResult {
+    title: string;
+    videoId: string;
+    thumbnail: string;
+}
+export default function Search() {
     const [query, setQuery] = useState('');
-    const [results, setResults] = useState<any[]>([]);
+    const [results, setResults] = useState<searchResult[]>([]);
     const socket = useSocketStore(state => state.socket);
     const { roomId } = useUserStore();
     const handleSearch = async () => {
-        const res = await axios.get(`http://${process.env.NEXT_PUBLIC_BACKEND}:4000/search?q=` + query); // Next.js에서 프록시 설정도 가능
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/search?q=` + query); // Next.js에서 프록시 설정도 가능
         setResults(res.data);
     };
     const handleAdd = (title:string, videoId:string) => {
@@ -39,7 +44,7 @@ export default function Search(props) {
             <ul className="space-y-3 overflow-scroll h-fit">
                 {results.map((video) => (
                     <li key={video.videoId} className="bg-white p-2 rounded shadow-sm flex gap-2 items-start highlight text-default">
-                        <img
+                        <Image
                             src={video.thumbnail}
                             alt="thumb"
                             className="w-20 h-16 rounded object-cover"
