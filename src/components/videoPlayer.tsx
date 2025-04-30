@@ -102,7 +102,7 @@ export default function VideoPlayer() {
                             disablekb: 1
                         }
                     }}
-                    onReady={()=>onPlayerReady()}
+                    onReady={onPlayerReady}
                     onEnd={() => handleVideoEnd()}
                 ></YouTube>
                 <button onClick={() => handleVideoEnd()} className='text-default '>skip</button>
