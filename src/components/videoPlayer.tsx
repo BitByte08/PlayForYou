@@ -51,6 +51,11 @@ export default function VideoPlayer() {
     };
     const onPlayerReady = (event:YouTubeEvent) => {
         playerRef.current = event.target;
+        try {
+            playerRef.current.unMute();
+        }catch(e){
+            console.log(e);
+        }
     };
     useEffect(() => {
         if (!socket) return;
@@ -97,7 +102,7 @@ export default function VideoPlayer() {
                             disablekb: 1
                         }
                     }}
-                    onReady={onPlayerReady}
+                    onReady={()=>onPlayerReady()}
                     onEnd={() => handleVideoEnd()}
                 ></YouTube>
                 <button onClick={() => handleVideoEnd()} className='text-default '>skip</button>
