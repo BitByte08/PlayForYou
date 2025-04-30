@@ -33,7 +33,8 @@ export default function Home() {
 
   useEffect(() => {
     if (socket) {
-      const Handle = () => {
+      const Handle = (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
         clearPlaylist();
         socket.emit('leave_room', roomId);
       };
