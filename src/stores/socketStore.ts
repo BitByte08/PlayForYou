@@ -13,7 +13,10 @@ export const useSocketStore = create<SocketStore>((set) => ({
     socket: null,
     actions: {
         connect: () => {
-            const socket = io("wss://play4you.bitworkspace.xyz/api");
+            const socket = io("wss://play4you.bitworkspace.xyz",{
+                path: "/socket.io",
+                transports: ["websocket"]
+            });
             set({socket});
             console.log(`${process.env.NEXT_PUBLIC_BACKEND}`);
             // 기본 이벤트 등록도 여기서 할 수 있어
