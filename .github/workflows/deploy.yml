@@ -2,7 +2,8 @@ name: Deploy Frontend
 
 on:
   push:
-    branches: main
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -11,6 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Upload frontend project (excluding .git)
         uses: appleboy/scp-action@master
@@ -33,8 +42,8 @@ jobs:
           script: |
             cd ~/PlayForYou/frontend
 
-            # .env.production 생성
-            echo "${{ secrets.FRONT_ENV_PROD }}" > .env.local
+            # .env.local 생성 (줄바꿈 깨지지 않게)
+            echo "${{ secrets.FRONT_ENV_PROD }}" | tr '\r' '\n' > .env.local
 
             docker-compose down
             docker-compose up -d --build
