@@ -87,27 +87,33 @@ export default function VideoPlayer() {
         if (socket) socket.emit('end_music', roomId);
       };
     return (
-            <div className="aspect-video w-full">
-                {showModal && <SoundModal onClose={handleModalClose} />}
-                {nowPlay!==""&&<><YouTube
-                    videoId={nowPlay}
-                    opts={{
-                        playerVars: {
-                            autoplay: 1,
-                            mute: (isMute?1:0),
-                            controls: 0,
-                            rel: 0,
-                            modestbranding: 1,
-                            start: videoStartTime,
-                            disablekb: 1
-                        }
-                    }}
-                    onReady={onPlayerReady}
-                    onEnd={() => handleVideoEnd()}
-                ></YouTube>
-                <button onClick={() => handleVideoEnd()} className='text-default '>skip</button>
-                </>}
-            </div>
+        <div className="aspect-video w-full">
+            {showModal && <SoundModal onClose={handleModalClose} />}
+            {nowPlay !== "" && (
+                <>
+                    <YouTube
+                        videoId={nowPlay}
+                        opts={{
+                            host: "https://www.youtube-nocookie.com", // 이걸 "https://www.youtube-nocookie.com"으로 바꿔도 react-youtube가 무시하는 경우가 많음
+                            playerVars: {
+                                autoplay: 1,
+                                mute: isMute ? 1 : 0,
+                                controls: 0,
+                                rel: 0,
+                                modestbranding: 1,
+                                start: videoStartTime,
+                                disablekb: 1,
+                                fs: 0, // 전체화면 버튼 제거
+                                iv_load_policy: 3, // 주석(annotations) 제거
+                            }
+                        }}
+                        onReady={onPlayerReady}
+                        onEnd={handleVideoEnd}
+                    />
+                    <button onClick={handleVideoEnd} className="text-default">skip</button>
+                </>
+            )}
+        </div>
         );
     
 }
