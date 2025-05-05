@@ -47,6 +47,8 @@ export default function Search() {
                         <Image
                             src={video.thumbnail}
                             alt="thumb"
+                            width={0}
+                            height={0}
                             className="w-20 h-16 rounded object-cover"
                         />
                         <div className="flex-1">

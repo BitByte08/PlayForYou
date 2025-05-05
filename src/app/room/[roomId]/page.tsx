@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useParams } from "next/navigation";
 import { usePlaylistStore } from "@/stores/playlistStore";
-import { musicType } from "@/type";
+import { MusicType } from "@/type";
 import VideoPlayer from "@/components/videoPlayer";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
@@ -44,7 +44,7 @@ export default function Home() {
       socket.emit('join_room', roomId);
       socket.emit('get_music', roomId);
       setRoomId(roomId);
-      socket.on('playlist', (resPlaylist: musicType[]) => {
+      socket.on('playlist', (resPlaylist: MusicType[]) => {
         if(playlist!=resPlaylist)
         setPlaylist(resPlaylist);
       });

@@ -11,7 +11,7 @@ interface SidebarSectionProps {
     setSidebarMode: (mode: string) => void;
     isSidebarOpen: boolean;
 }
-interface modalProps{
+interface ModalProps{
     type: string;
     title: string;
     content: string;
@@ -27,7 +27,7 @@ export const Sidebar = () => {
     const isInRoom = router.includes('/room');
     const [sidebarMode, setSidebarMode] = useState("default");
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [modal, setModal] = useState<modalProps|undefined>();
+    const [modal, setModal] = useState<ModalProps|undefined>();
     const logic = (state:boolean) => {
         if(sidebarMode === "default") {
             setIsSidebarOpen(state);

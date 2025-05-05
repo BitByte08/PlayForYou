@@ -5,17 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import SoundModal from "./soundModal";
 import YouTube, {YouTubeEvent, YouTubePlayer} from "react-youtube";
 import { useUserStore } from "@/stores/userStore";
+import {RoomState} from "@/interface";
 
-interface MusicData {
-    name: string;
-    id: string;
-  }
-  
-  export interface RoomState {
-    currentMusic: MusicData;
-    startedAt: number;
-    endCount: number;
-  }
+
+
 
 export default function VideoPlayer() {
     const socket = useSocketStore(state => state.socket);

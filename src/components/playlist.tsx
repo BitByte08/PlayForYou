@@ -1,10 +1,7 @@
 'use client';
 import { usePlaylistStore } from "@/stores/playlistStore";
 import Image from "next/image";
-interface MusicData {
-    name: string,
-    id: string
-};
+import {MusicType} from "@/type";
 export const Playlist = () => {
     const playlist = usePlaylistStore(state => state.playlist);
     return (
@@ -19,7 +16,7 @@ export const Playlist = () => {
     )
 }
 interface MusicBlockProps {
-    music: MusicData;
+    music: MusicType;
 }
 const MusicBlock = (props:MusicBlockProps) => {
     const {music} = props;
