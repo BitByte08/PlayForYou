@@ -6,18 +6,13 @@ import { usePathname } from 'next/navigation';
 import { Playlist } from '../playlist';
 import { IoSearchOutline, IoCreateOutline, IoPersonOutline, IoMusicalNotesOutline } from "react-icons/io5";
 import {Modal} from "@/components/global/modal";
+import {useModalStore} from "@/stores/modalStore";
 interface SidebarSectionProps {
     sidebarMode: string;
     setSidebarMode: (mode: string) => void;
     isSidebarOpen: boolean;
 }
-interface modalProps{
-    type: string;
-    title: string;
-    content: string;
-}
 export const Sidebar = () => {
-
     useEffect(() => {
         setTimeout(()=>{
             setIsSidebarOpen(false);
@@ -27,7 +22,7 @@ export const Sidebar = () => {
     const isInRoom = router.includes('/room');
     const [sidebarMode, setSidebarMode] = useState("default");
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [modal, setModal] = useState<modalProps|undefined>();
+    const modal = useModalStore(state => state.state);
     const logic = (state:boolean) => {
         if(sidebarMode === "default") {
             setIsSidebarOpen(state);
