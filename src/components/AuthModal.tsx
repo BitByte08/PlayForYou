@@ -17,7 +17,7 @@ const AuthModal = ({ isOpen, closeModal }:props) => {
 
     try {
       const url = isLogin
-        ? `${process.env.NEXT_PUBLIC_BACKEND}login`
+        ? `${process.env.NEXT_PUBLIC_BACKEND}/login`
         : `${process.env.NEXT_PUBLIC_BACKEND}/signin`;
 
       const response = await axios.post(url, { email, password });

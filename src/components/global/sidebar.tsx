@@ -5,10 +5,16 @@ import Search from '../search';
 import { usePathname } from 'next/navigation';
 import { Playlist } from '../playlist';
 import { IoSearchOutline, IoCreateOutline, IoPersonOutline, IoMusicalNotesOutline } from "react-icons/io5";
+import {Modal} from "@/components/global/modal";
 interface SidebarSectionProps {
     sidebarMode: string;
     setSidebarMode: (mode: string) => void;
     isSidebarOpen: boolean;
+}
+interface modalProps{
+    type: string;
+    title: string;
+    content: string;
 }
 export const Sidebar = () => {
 
@@ -21,6 +27,7 @@ export const Sidebar = () => {
     const isInRoom = router.includes('/room');
     const [sidebarMode, setSidebarMode] = useState("default");
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [modal, setModal] = useState<modalProps|undefined>();
     const logic = (state:boolean) => {
         if(sidebarMode === "default") {
             setIsSidebarOpen(state);
@@ -29,16 +36,19 @@ export const Sidebar = () => {
         }
     }
     return (
-        <section className={`${isSidebarOpen?"w-3/7":" w-26"}  h-full border-default rounded-2xl border-1 transition-all duration-500 flex flex-col p-6 background-default`} 
-                id="sidebar"
-                onMouseEnter={() => logic(true)}
-                onMouseLeave={() => logic(false)}
-        >
-            <UserSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />
-            {!isInRoom && <CreateRoomSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />}
-            {isInRoom && <SearchSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />}
-            <PlaylistSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />
-        </section>
+        <div className={`h-full ${isSidebarOpen?"w-128":" w-26"} transition-all duration-500 flex flex-col gap-4`}>
+            <section className={`h-full border-default rounded-2xl border-1 transition-all duration-500 flex flex-col p-6 background-default`}
+                    id="sidebar"
+                    onMouseEnter={() => logic(true)}
+                    onMouseLeave={() => logic(false)}
+            >
+                <UserSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />
+                {!isInRoom && <CreateRoomSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />}
+                {isInRoom && <SearchSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />}
+                <PlaylistSection sidebarMode={sidebarMode} setSidebarMode={setSidebarMode} isSidebarOpen={isSidebarOpen} />
+            </section>
+            {modal && <Modal type={modal.type} title={modal.title} content={modal.content} />}
+        </div>
     )
 }
 
