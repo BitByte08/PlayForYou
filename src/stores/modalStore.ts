@@ -19,7 +19,7 @@ type ModalActions = {
   }
 }
 
-export const useModalStore = create<ModalState & ModalActions>((set,get) => ({
+export const useModalStore = create<ModalState & ModalActions>((set) => ({
   state : undefined,
   actions: {
     setModal: (props: ModalProps) => set({state:props}),
