@@ -1,16 +1,8 @@
+import { ModalProps } from "@/interface";
 import {create} from "zustand";
 
-interface ModalProps{
-  type: string;
-  title: string;
-  content: string;
-}
 type ModalState = {
-  state: {
-    type: string;
-    title: string;
-    content: string;
-  }|undefined
+  state: ModalProps|undefined
 }
 type ModalActions = {
   actions: {

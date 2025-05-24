@@ -10,7 +10,7 @@ export default function NowPlaying({ title, thumbnail, elapsed, duration }: {
     const percentage = Math.min(100, (elapsed / duration) * 100);
 
     return (
-        <div className="flex items-center bg-gray-900 text-white p-4 rounded-xl shadow-md">
+        <div className="flex-1 items-center bg-gray-900 text-white p-4 rounded-xl shadow-md">
             <Image src={thumbnail} alt="thumbnail" className="w-24 h-24 rounded-lg mr-4 object-cover" />
             <div className="flex-1">
                 <h3 className="text-lg font-semibold truncate">{title}</h3>

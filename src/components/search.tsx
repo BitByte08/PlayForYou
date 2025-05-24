@@ -5,6 +5,8 @@ import axios from 'axios';
 import {useSocketStore} from "@/stores/socketStore";
 import { useUserStore } from '@/stores/userStore';
 import Image from "next/image";
+import {useModalStore} from "@/stores/modalStore";
+import {ModalProps} from "@/interface";
 interface searchResult {
     title: string;
     videoId: string;
@@ -14,18 +16,24 @@ export default function Search() {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<searchResult[]>([]);
     const socket = useSocketStore(state => state.socket);
+    const {setModal, clearModal} = useModalStore(state => state.actions);
     const { roomId } = useUserStore();
     const handleSearch = async () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/search?q=` + query); // Next.js에서 프록시 설정도 가능
         setResults(res.data);
     };
     const handleAdd = (title:string, videoId:string) => {
-        if(socket)
-            socket.emit('add_music', { roomId: roomId, musicInfo: {name:title,id:videoId} });
-
+        if(socket) {
+          socket.emit('add_music', {roomId: roomId, musicInfo: {name: title, id: videoId}});
+          const modalInfo:ModalProps = {
+            content: title, title: "노래 추가됨", type: "alert"
+          };
+          setModal(modalInfo);
+          setTimeout(() => clearModal(),5000);
+        }
     };
     return (
-        <>
+        <div className="flex-1">
             <div className="sticky top-0 background-default text-default">
                 <input
                     className="w-full border border-gray-400 rounded px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -41,7 +49,7 @@ export default function Search() {
                     검색
                 </button>
             </div>
-            <ul className="space-y-3 overflow-scroll h-fit">
+            <ul className="space-y-3 overflow-y-scroll h-auto">
                 {results.map((video) => (
                     <li key={video.videoId} className="bg-white p-2 rounded shadow-sm flex gap-2 items-start highlight text-default">
                         <Image
@@ -58,6 +66,6 @@ export default function Search() {
                     </li>
                 ))}
             </ul>
-        </>
+        </div>
     );
 }

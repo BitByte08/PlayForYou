@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import SoundModal from "./soundModal";
 import YouTube, {YouTubeEvent, YouTubePlayer} from "react-youtube";
 import { useUserStore } from "@/stores/userStore";
-import {RoomState} from "@/interface";
+import {ModalProps, RoomState} from "@/interface";
+import {useModalStore} from "@/stores/modalStore";
 
 
 
@@ -13,6 +14,7 @@ import {RoomState} from "@/interface";
 export default function VideoPlayer() {
     const socket = useSocketStore(state => state.socket);
     const roomId = useUserStore(state => state.roomId);
+    const setModal = useModalStore(state => state.actions.setModal)
     const playerRef = useRef<YouTubePlayer>(undefined);
     const [videoStartTime, setVideoStartTime] = useState<number>(0);
     const [nowPlay, setNowPlay] = useState<string>('');
@@ -79,9 +81,16 @@ export default function VideoPlayer() {
     const handleVideoEnd = () => {
         if (socket) socket.emit('end_music', roomId);
       };
+  useEffect(() => {
+    if(showModal){
+      const State:ModalProps = {
+        content: "알람1", title: "알람1", type: "alert", function: handleModalClose
+      }
+      setModal(State);
+    }
+  }, [showModal]);
     return (
-        <div className="aspect-video w-full">
-            {showModal && <SoundModal onClose={handleModalClose} />}
+        <div className="aspect-video p-8">
             {nowPlay !== "" && (
                 <>
                     <YouTube
