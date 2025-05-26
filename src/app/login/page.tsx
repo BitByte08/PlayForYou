@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react'
 import supabase from '@/supabaseClient'
+import {ColorButton} from "@/components/global/button";
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -18,11 +19,11 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-6">
       <h2>로그인 / 회원가입</h2>
       <input type="email" placeholder="이메일" onChange={e => setEmail(e.target.value)} />
       <input type="password" placeholder="비밀번호" onChange={e => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>로그인</button>
+      <ColorButton function={()=>{handleLogin()}} >로그인</ColorButton>
       <button onClick={handleSignup}>회원가입</button>
       <p>{message}</p>
     </div>
