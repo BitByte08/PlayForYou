@@ -2,7 +2,8 @@ export interface ModalProps{
   type: string|undefined;
   title: string|undefined;
   content: string|undefined;
-  function: any|undefined;
+  action?: () => void;
+  autoClose?: boolean;
 }
 interface MusicData {
   name: string;

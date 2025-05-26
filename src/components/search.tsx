@@ -7,6 +7,7 @@ import { useUserStore } from '@/stores/userStore';
 import Image from "next/image";
 import {useModalStore} from "@/stores/modalStore";
 import {ModalProps} from "@/interface";
+import {underline} from "next/dist/lib/picocolors";
 interface searchResult {
     title: string;
     videoId: string;
@@ -26,7 +27,7 @@ export default function Search() {
         if(socket) {
           socket.emit('add_music', {roomId: roomId, musicInfo: {name: title, id: videoId}});
           const modalInfo:ModalProps = {
-            content: title, title: "노래 추가됨", type: "alert"
+            content: title, title: "노래 추가됨", type: "alert", autoClose: true
           };
           setModal(modalInfo);
           setTimeout(() => clearModal(),5000);
