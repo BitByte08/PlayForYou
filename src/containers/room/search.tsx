@@ -7,7 +7,6 @@ import { useUserStore } from '@/stores/userStore';
 import Image from "next/image";
 import {useModalStore} from "@/stores/modalStore";
 import {ModalProps} from "@/interface";
-import {underline} from "next/dist/lib/picocolors";
 interface searchResult {
     title: string;
     videoId: string;
