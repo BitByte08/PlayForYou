@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import { useParams } from "next/navigation";
 import { usePlaylistStore } from "@/stores/playlistStore";
 import { MusicType } from "@/type";
-import VideoPlayer from "@/components/videoPlayer";
+import VideoPlayer from "@/containers/room/videoPlayer";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
 import { useUserStore } from '@/stores/userStore';
 import {useModalStore} from "@/stores/modalStore";
 import {ModalProps} from "@/interface";
-import {Playlist} from "@/components/playlist";
-import Search from "@/components/search";
+import {Playlist} from "@/containers/room/playlist";
+import Search from "@/containers/room/search";
 
 interface MusicData {
   name: string;

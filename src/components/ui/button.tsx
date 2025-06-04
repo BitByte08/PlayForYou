@@ -1,7 +1,4 @@
-interface ButtonProps {
-  function: () => void | undefined;
-  children: React.ReactNode;
-}
+import { ButtonProps } from "@/interface"
 
 export const ColorButton = (props: ButtonProps) => {
   return (

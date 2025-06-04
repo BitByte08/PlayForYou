@@ -21,12 +21,12 @@ export default function VideoPlayer() {
   const handleModalClose = () => {
     setShowModal(false);
     // 유저가 클릭하면 음소거 해제
-    let succes = false;
+    let success = false;
     const setMute = setInterval(() => {
-      if (!succes && playerRef.current?.getPlayerState()) {
+      if (!success && playerRef.current?.getPlayerState()) {
         try {
           playerRef.current.unMute();
-          succes = true;
+          success = true;
           setIsMute(false);
         } catch (e) {
           console.log(e);

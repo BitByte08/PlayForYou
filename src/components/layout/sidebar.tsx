@@ -1,7 +1,7 @@
 'use client';
 import {useState, useEffect} from 'react';
 import {IoCreateOutline, IoPersonOutline} from "react-icons/io5";
-import {Modal} from "@/components/global/modal";
+import {Modal} from "@/components/layout/modal";
 import Link from "next/link";
 import {useModalStore} from "@/stores/modalStore";
 
@@ -18,7 +18,7 @@ export const Sidebar = () => {
   }
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   useEffect(() => {
-    modalHandle(true);
+    modalHandle(false);
   }, [modal]);
   return (
     <div className={`h-full ${isSidebarOpen ? "w-128" : " w-26"} transition-all duration-500 flex flex-col gap-4`}

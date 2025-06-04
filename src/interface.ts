@@ -14,3 +14,8 @@ export interface RoomState {
   startedAt: number;
   endCount: number;
 }
+
+export interface ButtonProps {
+  function: () => void | undefined;
+  children: React.ReactNode;
+}
