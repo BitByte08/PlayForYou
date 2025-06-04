@@ -7,8 +7,6 @@ import VideoPlayer from "@/containers/room/videoPlayer";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
 import { useUserStore } from '@/stores/userStore';
-import {useModalStore} from "@/stores/modalStore";
-import {ModalProps} from "@/interface";
 import {Playlist} from "@/containers/room/playlist";
 import Search from "@/containers/room/search";
 
@@ -31,7 +29,6 @@ export default function Home() {
   const playlist = usePlaylistStore(state => state.playlist);
   const { setPlaylist, clearPlaylist } = usePlaylistStore(state => state.actions);
   const { setRoomId, clearRoomId } = useUserStore();
-  const { setModal, clearModal } = useModalStore(state => state.actions);
   useEffect(() => {
     if (socket === null) connect();
   }, [socket, connect]);
