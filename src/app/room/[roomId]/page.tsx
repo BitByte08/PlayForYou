@@ -3,10 +3,12 @@ import { useEffect } from 'react';
 import { useParams } from "next/navigation";
 import { usePlaylistStore } from "@/stores/playlistStore";
 import { MusicType } from "@/type";
-import VideoPlayer from "@/components/videoPlayer";
+import VideoPlayer from "@/containers/room/videoPlayer";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
 import { useUserStore } from '@/stores/userStore';
+import {Playlist} from "@/containers/room/playlist";
+import Search from "@/containers/room/search";
 
 interface MusicData {
   name: string;
@@ -26,7 +28,7 @@ export default function Home() {
   const roomId = params.roomId as string;
   const playlist = usePlaylistStore(state => state.playlist);
   const { setPlaylist, clearPlaylist } = usePlaylistStore(state => state.actions);
-  const {setRoomId, clearRoomId} = useUserStore();
+  const { setRoomId, clearRoomId } = useUserStore();
   useEffect(() => {
     if (socket === null) connect();
   }, [socket, connect]);
@@ -46,9 +48,8 @@ export default function Home() {
       setRoomId(roomId);
       socket.on('playlist', (resPlaylist: MusicType[]) => {
         if(playlist!=resPlaylist)
-        setPlaylist(resPlaylist);
+          setPlaylist(resPlaylist);
       });
-
       
 
       socket.on("room_deleted", () => {
@@ -78,7 +79,7 @@ export default function Home() {
   return (
     <main className="flex h-full w-full">
       {/* 오른쪽 메인 영역 */}
-      <div className="flex-1 p-4 space-y-4 overflow-auto">
+      <div className="flex-1 w-full h-full p-4 space-y-4 ">
         {/* <NowPlaying
           title={currentMusic?.name || '재생 중인 곡 없음'}
           thumbnail={`https://i.ytimg.com/vi/${currentMusic?.id}/mqdefault.jpg`}
@@ -86,6 +87,10 @@ export default function Home() {
           duration={duration}
         /> */}
         <VideoPlayer />
+        <div className="flex-1 flex flex-row h-full">
+          <Playlist />
+          <Search />
+        </div>
       </div>
       {/* 왼쪽 툴바 */}
     </main>
