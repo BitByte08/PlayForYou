@@ -78,7 +78,7 @@ jobs:
                curl -f http://localhost:$PORT || (echo "Health check failed" && exit 1)
                
                # Nginx conf 갱신 (템플릿 -> 실제 conf)
-               sed "s/__FRONTEND_PORT__/$PORT/" nginx/p4you.conf.template > nginx/p4you.conf
+               sed "s/__FRONTEND_PORT__/$PORT/" ~/PlayForYou/nginx/p4you.conf.template > ~/PlayForYou/nginx/p4you.conf
                
                # Nginx 재시작
                sudo nginx -t && sudo systemctl reload nginx
