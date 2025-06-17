@@ -5,7 +5,7 @@ import {MusicType} from "@/type";
 export const Playlist = () => {
     const playlist = usePlaylistStore(state => state.playlist);
     return (
-        <div className="flex-1">
+        <div className="h-full">
             {playlist?.length<=0 && <h2>플레이리스트가 비어있어요.</h2>}
             <ul>
                 {playlist?.map((music) => (
