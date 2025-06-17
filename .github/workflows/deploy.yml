@@ -52,7 +52,6 @@ jobs:
           target: "~/PlayForYou/${{ env.TARGET_DIR }}"
           rm: true
           strip_components: 1
-          exclude: ".git"
 
       # 5️⃣ nginx 템플릿과 설정도 함께 업로드
       - name: Upload nginx template & files
