@@ -84,5 +84,5 @@ jobs:
                sudo nginx -t && sudo systemctl reload nginx
                
                # 새 버전을 active로 기록
-               echo "$TARGET" > active_version
+               echo "$TARGET" > ~/PlayForYou/active_version
                echo "✅ Blue-Green deployment successful!"
