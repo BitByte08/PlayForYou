@@ -68,6 +68,10 @@ jobs:
       # 6️⃣ SSH 접속해서 컨테이너 재시작 + nginx conf 갱신 + 심볼릭 링크 연결 + 버전 기록
       - name: SSH deploy & update nginx
         uses: appleboy/ssh-action@master
+        env:
+          TARGET_DIR: ${{ env.TARGET_DIR }}
+          COMPOSE_FILE: ${{ env.COMPOSE_FILE }}
+          FRONTEND_PORT: ${{ env.FRONTEND_PORT }}ㅛ
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
