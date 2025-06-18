@@ -6,8 +6,8 @@ import { MusicType } from "@/type";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
 import { useUserStore } from '@/stores/userStore';
-import {Playlist} from "@/containers/room/playlist";
-import Search from "@/containers/room/search";
+import {Playlist} from "@/components/ui/room/playlist";
+import Search from "@/components/ui/room/search";
 
 interface MusicData {
   name: string;
