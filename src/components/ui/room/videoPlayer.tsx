@@ -79,15 +79,15 @@ export default function VideoPlayer() {
     if (socket) socket.emit('end_music', roomId);
   };
   useEffect(() => {
-    if (showModal) {
+    if (showModal && roomId) {
       const State: ModalProps = {
         content: "소리를 들으려면 확인 버튼을 눌려주세요.", title: "소리 켜기", type: "alert", action: handleModalClose
       }
       setModal(State);
     }
-  }, [showModal]);
+  }, [showModal, roomId]);
   return (
-    <div className="aspect-video p-8">
+    <div className={`aspect-video`}>
       {nowPlay !== "" && (
         <>
           <YouTube

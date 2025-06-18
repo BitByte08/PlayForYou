@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSocketStore } from "@/stores/socketStore";
 import supabase from "@/supabaseClient";
-import RoomButton from "@/containers/main/RoomButton";
+import RoomButton from "@/components/ui/main/RoomButton";
 
 export default function HomePage() {
     const socket = useSocketStore(state => state.socket);

@@ -3,12 +3,11 @@ import { useEffect } from 'react';
 import { useParams } from "next/navigation";
 import { usePlaylistStore } from "@/stores/playlistStore";
 import { MusicType } from "@/type";
-import VideoPlayer from "@/containers/room/videoPlayer";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
 import { useUserStore } from '@/stores/userStore';
-import {Playlist} from "@/containers/room/playlist";
-import Search from "@/containers/room/search";
+import {Playlist} from "@/components/ui/room/playlist";
+import Search from "@/components/ui/room/search";
 
 interface MusicData {
   name: string;
@@ -86,7 +85,6 @@ export default function Home() {
           elapsed={elapsed}
           duration={duration}
         /> */}
-        <VideoPlayer />
         <div className="flex-1 flex flex-row h-full">
           <Playlist />
           <Search />
