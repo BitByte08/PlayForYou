@@ -35,9 +35,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex overflow-hidden h-screen max-h-screen w-screen max-w-screen`}>
-        <Sidebar />
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex overflow-hidden h-screen max-h-screen w-screen max-w-screen p-8`}>
+        <section className="w-full h-full glass rounded-[1.75rem] p-4">
+	        <Sidebar />
+	        {children}
+        </section>
       </body>
     </html>
   );

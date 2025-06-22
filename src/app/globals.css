@@ -61,7 +61,7 @@ body {
 
     /* 글래스모피즘 카드 */
     .glass {
-        @apply backdrop-blur bg-[var(--blockcolor)/50] border border-[var(--border-color)] rounded-xl shadow-lg;
+        @apply backdrop-blur bg-[var(--blockcolor)/50] border border-[var(--border-color)] shadow-lg;
     }
 
     /* 스크롤바 숨기기 */
