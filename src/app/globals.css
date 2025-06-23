@@ -10,17 +10,33 @@
     --border-color: #cbd5e1;      /* Light Border */
     --text-color: #0f172a;        /* Light Text */
     --primary-color: #38bdf8;     /* Sky Blue */
+
+    --primary-red: #f28b82;     /* pastel red */
+    --primary-orange: #fbbc04;  /* pastel orange */
+    --primary-yellow: #fff475;  /* pastel yellow */
+    --primary-green: #ccff90;   /* pastel green */
+    --primary-blue: #a7c7e7;    /* pastel blue */
+    --primary-indigo: #aecbfa;  /* pastel indigo (연남색) */
+    --primary-violet: #d7aefb;  /* pastel violet (연보라) */
+
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --background: #0f172a;      /* Dark BG (navy) */
         --foreground: #f9fafb;      /* Dark Text */
-        --blockcolor: #1e293b;      /* Dark Card */
+        --blockcolor: #0f1515;      /* Dark Card */
         --highlight-color: #0ea5e9; /* Dark Highlight (bright sky) */
         --border-color: #334155;    /* Dark Border */
         --text-color: #f9fafb;      /* Dark Text */
-        --primary-color: #38bdf8;   /* Sky Blue */
+
+        --primary-red: #b71c1c;
+        --primary-orange: #e65100;
+        --primary-yellow: #f9a825;
+        --primary-green: #1b5e20;
+        --primary-blue: #0d47a1;
+        --primary-indigo: #283593;
+        --primary-violet: #6a1b9a;
     }
 }
 
@@ -35,6 +51,9 @@ body {
 /* === 커스텀 Tailwind 유틸 === */
 @layer utilities {
     /* 기본 테두리 */
+    .background-default {
+        @apply bg-[var(--foreground)];
+    }
     .border-default {
         @apply border border-[var(--border-color)];
     }
@@ -56,12 +75,33 @@ body {
 
     /* 프라이머리 컬러 (하늘색) 텍스트/배경 */
     .primary {
-        @apply text-[var(--primary-color)] bg-[var(--primary-color)];
+        @apply bg-[var(--primary-color)];
     }
 
     /* 글래스모피즘 카드 */
-    .glass {
-        @apply backdrop-blur bg-[var(--blockcolor)/50] border border-[var(--border-color)] shadow-lg;
+    .glass-default {
+        @apply backdrop-blur bg-[var(--blockcolor)]/15 border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-red {
+        @apply backdrop-blur bg-[var(--primary-red)]/50 border border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-orange {
+        @apply backdrop-blur bg-[var(--primary-orange)]/50 border border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-yellow {
+        @apply backdrop-blur bg-[var(--primary-yellow)]/50 border border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-green {
+        @apply backdrop-blur bg-[var(--primary-green)]/50 border border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-blue {
+        @apply backdrop-blur bg-[var(--primary-blue)]/50 border border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-indigo {
+        @apply backdrop-blur bg-[var(--primary-indigo)]/50 border border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-violet {
+        @apply backdrop-blur bg-[var(--primary-violet)]/50 border border-[var(--border-color)] shadow-lg;
     }
 
     /* 스크롤바 숨기기 */
