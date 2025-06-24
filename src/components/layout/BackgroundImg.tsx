@@ -2,14 +2,22 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import {getUnsplashImg} from "@/lib/unsplash";
 
 const BackgroundImg = () => {
 	const [bgUrl, setBgUrl] = useState("");
 
 	useEffect(() => {
-		fetch("/api/background")
-			.then((res) => res.json())
-			.then((data) => setBgUrl(data.url));
+		async function fetchImage() {
+			try {
+				const data = await getUnsplashImg();
+				setBgUrl(data.url);
+			} catch (error) {
+				console.error("Failed to fetch image:", error);
+			}
+		}
+
+		fetchImage();
 	}, []);
 
 	if (!bgUrl) return null;
