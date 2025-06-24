@@ -9,7 +9,6 @@ import { useUserStore } from '@/stores/userStore';
 import {Playlist} from "@/components/ui/room/playlist";
 import Search from "@/components/ui/room/search";
 import VideoPlayer from "@/components/ui/room/videoPlayer";
-import {Modal} from "@/components/layout/modal";
 
 interface MusicData {
   name: string;

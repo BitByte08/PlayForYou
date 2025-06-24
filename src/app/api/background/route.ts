@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import axiosInstance from "@/lib/axios";
 
-export async function GET(req: Request) {
-	const { searchParams } = new URL(req.url);
+export async function GET() {
+	//const { searchParams } = new URL(req.url);
 	const query = process.env.UNSPLASH_QUERY || "abstract,blur";
 
 	try {
