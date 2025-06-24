@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {Sidebar} from "@/components/layout/sidebar";
-import Info from "@/components/layout/info";
-
+import Sidebar from "@/components/layout/Sidebar";
+import BackgroundImg from "@/components/layout/BackgroundImg";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -13,12 +12,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const Container = ({children, className}:{children:React.ReactNode,className?:string}) => (
-    <main className={`w-full h-full border-default rounded-4xl border-1 transition-w duration-500 background-default ${className}`}>
-      {children}
-    </main>
-)
 
 export const metadata: Metadata = {
   title: "Play For You",
@@ -35,14 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex overflow-hidden p-4 box-border h-screen w-screen gap-4 bg-white`}>
-      <Container className="flex-1/2">
-        <Info />
-      </Container>
-      <Container>
-        {children}
-      </Container>
-      <Sidebar />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex overflow-hidden h-screen max-h-screen w-screen max-w-screen p-8`}>
+        <section className="w-full h-full glass-default rounded-[3rem] p-4 flex z-1">
+	        <Sidebar />
+	        {children}
+        </section>
+        <BackgroundImg />
       </body>
     </html>
   );

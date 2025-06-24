@@ -8,6 +8,7 @@ import { router } from "next/client";
 import { useUserStore } from '@/stores/userStore';
 import {Playlist} from "@/components/ui/room/playlist";
 import Search from "@/components/ui/room/search";
+import VideoPlayer from "@/components/ui/room/videoPlayer";
 
 interface MusicData {
   name: string;
@@ -89,6 +90,7 @@ export default function Home() {
           <Playlist />
           <Search />
         </div>
+	      <VideoPlayer />
       </div>
       {/* 왼쪽 툴바 */}
     </main>
