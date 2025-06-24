@@ -1,6 +1,7 @@
-import Container from "@/components/ui/global/Container";
+import Container, {GlassHighlightContainer} from "@/components/ui/global/Containers";
 import Link from "next/link";
 import React from "react";
+import {Modal} from "@/components/layout/modal";
 interface NavBtnProps {
 	children?: React.ReactNode;
 	to: string;
@@ -15,11 +16,14 @@ const NavBtn:React.FC<NavBtnProps> = ({children, to}:NavBtnProps) => {
 const Sidebar:React.FC = () => {
   return(
     <aside className="h-full w-75 min-w-75">
-	    <Container className={`h-full w-full rounded-[2rem] py-6 px-4 glass-highlight-default flex flex-col gap-2`}>
+	    <GlassHighlightContainer className={`h-full w-full rounded-[2rem] py-6 px-4 flex flex-col justify-between`}>
+		    <Container className="flex flex-col gap-2">
 		      <NavBtn to={"/"}>Home</NavBtn>
 			    <NavBtn to={"/room"}>Room</NavBtn>
 			    <NavBtn to={"/login"}>Login</NavBtn>
-	    </Container>
+		    </Container>
+		    <Modal/>
+	    </GlassHighlightContainer>
     </aside>
   )
 }
