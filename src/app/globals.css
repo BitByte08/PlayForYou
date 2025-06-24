@@ -80,7 +80,10 @@ body {
 
     /* 글래스모피즘 카드 */
     .glass-default {
-        @apply backdrop-blur bg-[var(--blockcolor)]/15 border-[var(--border-color)] shadow-lg;
+        @apply backdrop-blur bg-[var(--blockcolor)]/15 border border-[var(--border-color)] shadow-lg;
+    }
+    .glass-highlight-default {
+        @apply backdrop-blur bg-[var(--blockcolor)]/75 border border-[var(--border-color)] shadow-lg;
     }
     .glass-highlight-red {
         @apply backdrop-blur bg-[var(--primary-red)]/50 border border-[var(--border-color)] shadow-lg;
