@@ -2,10 +2,14 @@
 import { usePlaylistStore } from "@/stores/playlistStore";
 import Image from "next/image";
 import {MusicType} from "@/type";
-export const Playlist = () => {
+import React from "react";
+interface PlaylistProps {
+	className? : string
+}
+export const Playlist: React.FC<PlaylistProps> = ({className}) => {
     const playlist = usePlaylistStore(state => state.playlist);
     return (
-        <div className="h-full">
+        <div className={className}>
             {playlist?.length<=0 && <h2>플레이리스트가 비어있어요.</h2>}
             <ul>
                 {playlist?.map((music) => (

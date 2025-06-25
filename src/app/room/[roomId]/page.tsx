@@ -9,6 +9,7 @@ import { useUserStore } from '@/stores/userStore';
 import {Playlist} from "@/components/ui/room/playlist";
 import Search from "@/components/ui/room/search";
 import VideoPlayer from "@/components/ui/room/videoPlayer";
+import {GlassContainer, GlassHighlightContainer} from "@/components/ui/global/Containers";
 
 interface MusicData {
   name: string;
@@ -78,21 +79,15 @@ export default function Home() {
   // 가상 음악 데이터 설정 (현재는 예시로 넣은 것)
   return (
     <main className="flex h-full w-full">
-      {/* 오른쪽 메인 영역 */}
-      <div className="flex-1 w-full h-full p-4 space-y-4 ">
-        {/* <NowPlaying
-          title={currentMusic?.name || '재생 중인 곡 없음'}
-          thumbnail={`https://i.ytimg.com/vi/${currentMusic?.id}/mqdefault.jpg`}
-          elapsed={elapsed}
-          duration={duration}
-        /> */}
-        <div className="flex-1 flex flex-row h-full">
-          <Playlist />
-          <Search />
-        </div>
-	      <VideoPlayer />
-      </div>
-      {/* 왼쪽 툴바 */}
+	    <GlassContainer className="px-6 py-4 rounded-[2rem] w-3/5 overflow-y-auto">
+	      <Search />
+	    </GlassContainer>
+	    <GlassContainer className="h-full w-2/5 rounded-[2rem] px-6 py-4 overflow-y-auto">
+		    <GlassHighlightContainer className="rounded-[0.25rem] sticky top-0 mb-4">
+		      <VideoPlayer />
+		    </GlassHighlightContainer>
+		    <Playlist className="h-fit w-full"/>
+	    </GlassContainer>
     </main>
   );
 }
