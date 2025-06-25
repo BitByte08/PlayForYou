@@ -11,6 +11,13 @@ const Container: React.FC<ContainerProps> = ({ children, className }) => {
 		</div>
 	);
 };
+const GlassContainer: React.FC<ContainerProps> = ({ children, className }) => {
+	return (
+		<div className={`text-default glass-default ${className}`}>
+			{children}
+		</div>
+	)
+}
 const GlassHighlightContainer: React.FC<ContainerProps> = ({ children, className }) => {
 	return (
 		<div className={`text-default glass-highlight-default ${className}`}>
@@ -19,4 +26,4 @@ const GlassHighlightContainer: React.FC<ContainerProps> = ({ children, className
 	)
 }
 export default Container;
-export {GlassHighlightContainer};
+export {GlassContainer, GlassHighlightContainer};
