@@ -85,7 +85,8 @@ jobs:
                sed "s/__FRONTEND_PORT__/$PORT/" ~/PlayForYou/nginx/p4you.conf.template > ~/PlayForYou/nginx/p4you.conf
                
                # Nginx 재시작
-               sudo nginx -t && sudo systemctl reload nginx
+               sudo nginx -t
+               sudo systemctl reload nginx
                
                # 새 버전을 active로 기록
                echo "$TARGET" > ~/PlayForYou/active_version
