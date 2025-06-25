@@ -33,10 +33,10 @@ export default function Search() {
         }
     };
     return (
-        <div className="flex-1">
-            <div className="sticky top-0 background-default text-default">
+        <>
+            <div className="sticky top-0 text-default flex h-12 gap-2 z-1 mb-4">
                 <input
-                    className="w-full border border-gray-400 rounded px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="glass-default w-full h-full rounded-full px-3 focus:outline-none focus:ring-1 focus:ring-[var(--highlight-color)]"
                     placeholder="검색어 입력"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -44,14 +44,14 @@ export default function Search() {
 
                 <button
                     onClick={handleSearch}
-                    className="w-full bg-blue-500 text-white rounded py-2 mb-4 hover:bg-blue-600 transition"
+                    className="min-w-12 min-h-12  glass-default text-white rounded-full py-2 hover:bg-[var(--highlight-color)] transition"
                 >
                     검색
                 </button>
             </div>
-            <ul className="space-y-3 overflow-y-scroll h-auto">
+            <ul className="h-fit z-0 flex flex-wrap gap-2">
                 {results.map((video) => (
-                    <li key={video.videoId} className="bg-white p-2 rounded shadow-sm flex gap-2 items-start highlight text-default">
+                    <li key={video.videoId} className="w-[calc(50%-1rem)] glass-default p-2 rounded shadow-sm flex gap-2 items-start text-default">
                         <Image
                             src={video.thumbnail}
                             alt="thumb"
@@ -66,6 +66,6 @@ export default function Search() {
                     </li>
                 ))}
             </ul>
-        </div>
+        </>
     );
 }
