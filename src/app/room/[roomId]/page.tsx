@@ -6,10 +6,10 @@ import { MusicType } from "@/type";
 import { useSocketStore } from "@/stores/socketStore";
 import { router } from "next/client";
 import { useUserStore } from '@/stores/userStore';
-import {Playlist} from "@/components/ui/room/playlist";
-import Search from "@/components/ui/room/search";
-import VideoPlayer from "@/components/ui/room/videoPlayer";
-import {GlassContainer, GlassHighlightContainer} from "@/components/ui/global/Containers";
+import {Playlist} from "@/app/room/[roomId]/_features/ui/Playlist";
+import Search from "@/app/room/[roomId]/_features/ui/Search";
+import Player from "@/app/room/[roomId]/_features/ui/Player";
+import {GlassContainer, GlassHighlightContainer} from "@/components/ui/Containers";
 
 interface MusicData {
   name: string;
@@ -83,8 +83,8 @@ export default function Home() {
 	      <Search />
 	    </GlassContainer>
 	    <GlassContainer className="h-full w-2/5 rounded-[2rem] px-6 py-4 overflow-y-auto">
-		    <GlassHighlightContainer className="rounded-[0.25rem] sticky top-0 mb-4">
-		      <VideoPlayer />
+		    <GlassHighlightContainer className="rounded-[0.25rem] sticky top-0 mb-4 aspect-video">
+		      <Player className="rounded-[0.25rem]" />
 		    </GlassHighlightContainer>
 		    <Playlist className="h-fit w-full"/>
 	    </GlassContainer>

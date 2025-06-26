@@ -1,7 +1,7 @@
-import Container, {GlassHighlightContainer} from "@/components/ui/global/Containers";
+import Container, {GlassHighlightContainer} from "@/components/ui/Containers";
 import Link from "next/link";
 import React from "react";
-import {Modal} from "@/components/layout/modal";
+import {Modal} from "@/components/layout/Modal";
 interface NavBtnProps {
 	children?: React.ReactNode;
 	to: string;

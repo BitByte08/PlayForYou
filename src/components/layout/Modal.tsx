@@ -3,7 +3,7 @@ import {ModalProps} from "@/interface";
 import {IoNotificationsOutline} from "react-icons/io5";
 import {useEffect, useState} from "react";
 import {useModalStore} from "@/stores/modalStore";
-import {ColorButton} from "@/components/ui/global/button";
+import {ColorButton} from "@/components/ui/button";
 
 export const Modal = () => {
   const props: ModalProps | undefined = useModalStore(state => state.state);

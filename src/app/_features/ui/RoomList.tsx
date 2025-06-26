@@ -1,7 +1,7 @@
 import {useSocketStore} from "@/stores/socketStore";
 import {useEffect, useState} from "react";
 import supabase from "@/supabaseClient";
-import RoomButton from "@/components/ui/main/RoomButton";
+import RoomButton from "@/app/_features/ui/RoomButton";
 
 
 const RoomList = () => {

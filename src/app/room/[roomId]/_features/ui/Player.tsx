@@ -7,8 +7,10 @@ import {useUserStore} from "@/stores/userStore";
 import {ModalProps, RoomState} from "@/interface";
 import {useModalStore} from "@/stores/modalStore";
 
-
-export default function VideoPlayer() {
+interface VideoPlayerProps {
+	className?: string;
+}
+export default function Player({className}:VideoPlayerProps) {
   const socket = useSocketStore(state => state.socket);
   const roomId = useUserStore(state => state.roomId);
   const setModal = useModalStore(state => state.actions.setModal)
@@ -87,10 +89,11 @@ export default function VideoPlayer() {
     }
   }, [showModal, roomId]);
   return (
-    <div className={`aspect-video`}>
+		<>
       {nowPlay !== "" && (
         <>
           <YouTube
+	          className={`h-full w-full ${className}`}
             videoId={nowPlay}
             opts={{
               host: "https://www.youtube-nocookie.com", // 이걸 "https://www.youtube-nocookie.com"으로 바꿔도 react-youtube가 무시하는 경우가 많음
@@ -109,10 +112,9 @@ export default function VideoPlayer() {
             onReady={onPlayerReady}
             onEnd={handleVideoEnd}
           />
-          <button onClick={handleVideoEnd} className="text-default">skip</button>
         </>
       )}
-    </div>
+		</>
   );
 
 }
