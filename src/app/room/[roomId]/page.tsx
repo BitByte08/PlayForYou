@@ -11,13 +11,9 @@ import Search from "@/app/room/[roomId]/_features/ui/Search";
 import Player from "@/app/room/[roomId]/_features/ui/Player";
 import {GlassContainer, GlassHighlightContainer} from "@/components/ui/Containers";
 
-interface MusicData {
-  name: string;
-  id: string;
-}
 
 export interface RoomState {
-  currentMusic: MusicData;
+  currentMusic: MusicType;
   startedAt: number;
   endCount: number;
 }
@@ -41,7 +37,7 @@ export default function Home() {
         clearPlaylist();
         socket.emit('leave_room', roomId);
       };
-      socket?.on('playlist', (resPlaylist: MusicData[]) => {
+      socket?.on('playlist', (resPlaylist: MusicType[]) => {
         setPlaylist(resPlaylist);
       });
       socket.emit('join_room', roomId);
