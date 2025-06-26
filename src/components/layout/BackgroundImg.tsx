@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {getUnsplashImg} from "@/lib/unsplash";
+import {getUnsplashImg} from "@/app/_entities/api/queries";
 
 const BackgroundImg = () => {
 	const [bgUrl, setBgUrl] = useState("");

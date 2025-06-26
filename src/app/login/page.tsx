@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react'
 import supabase from '@/supabaseClient'
-import {ColorButton} from "@/components/ui/global/button";
+import {ColorButton} from "@/components/ui/button";
 
 const Login = () => {
   const [email, setEmail] = useState('')

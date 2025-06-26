@@ -1,9 +1,9 @@
 // lib/unsplash.ts (API 호출 전용 함수)
 
-import axiosInstance from "@/lib/axios";
+import axiosInstance from "@/app/_entities/api/axios";
 
 export async function getUnsplashImg() {
-	const query = "abstract,blur";
+	const query = "white";
 
 	try {
 		const response = await axiosInstance.get("/photos/random", {

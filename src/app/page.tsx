@@ -1,5 +1,5 @@
 'use client'
-import RoomList from "@/components/ui/main/RoomList";
+import RoomList from "@/app/_features/ui/RoomList";
 
 export default function HomePage() {
     return (
