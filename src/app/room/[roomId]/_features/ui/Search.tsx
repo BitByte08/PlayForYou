@@ -36,7 +36,7 @@ export default function Search() {
         <>
             <div className="sticky top-0 text-default flex h-12 gap-2 z-1 mb-4">
                 <input
-                    className="glass-highlight-default w-full h-full rounded-full px-3 focus:outline-none focus:ring-1 focus:ring-[var(--highlight-color)]"
+                    className="text-default glass-highlight-default w-full h-full rounded-full px-3 focus:outline-none focus:ring-1 focus:ring-[var(--highlight-color)]"
                     placeholder="검색어 입력"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -44,7 +44,7 @@ export default function Search() {
 
                 <button
                     onClick={handleSearch}
-                    className="min-w-12 min-h-12  glass-highlight-default text-white rounded-full py-2 hover:bg-[var(--highlight-color)] transition"
+                    className="text-default min-w-12 min-h-12  glass-highlight-default text-white rounded-full py-2 hover:bg-[var(--highlight-color)] transition"
                 >
                     검색
                 </button>
