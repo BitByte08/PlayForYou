@@ -69,12 +69,12 @@ jobs:
                EOF
                
                # 새 컨테이너 빌드 & 실행
-               docker-compose -f docker-compose.$TARGET.yml down || true
+               docker compose -f docker-compose.$TARGET.yml down || true
                # Step 1: 빌드만 하고 실패나면 바로 중단
-               docker-compose -f docker-compose.$TARGET.yml build
+               docker compose -f docker-compose.$TARGET.yml build
                 
                # Step 2: 빌드 성공했으면 컨테이너 실행
-               docker-compose -f docker-compose.$TARGET.yml up -d
+               docker compose -f docker-compose.$TARGET.yml up -d
                
                # 헬스체크
                echo "Waiting for health check..."

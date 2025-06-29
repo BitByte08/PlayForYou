@@ -9,18 +9,16 @@ const Room = () => {
   const { connect, disconnect } = useSocketStore(state => state.actions);
   const sendSocket = () => socket?.emit('create_room');
   useEffect(() => {
-    if (!socket) connect();
-  }, [socket, connect]);
-  useEffect(() => {
+	  if (!socket) connect();
     socket?.on('add_room', (room: string) => {
       router.push(`room/${room}`);
     });
-    window.removeEventListener('beforeunload', disconnect);
+    window.addEventListener('beforeunload', disconnect);
     return () => {
       window.removeEventListener('beforeunload', disconnect);
       socket?.off('add_room');
     };
-  }, [socket, disconnect]);
+  }, [socket,router,connect,disconnect]);
   return (
     <div className="flex flex-wrap m-6">
       <input type="text" placeholder="방 이름" className='w-full h-10 border-1 border-default rounded mb-2' />

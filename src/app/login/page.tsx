@@ -1,9 +1,13 @@
 'use client';
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import supabase from '@/supabaseClient'
 import {ColorButton} from "@/components/ui/button";
+import {useSocketStore} from "@/stores/socketStore";
 
 const Login = () => {
+	const socket = useSocketStore(state => state.socket);
+	const { disconnect } = useSocketStore(state => state.actions);
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
@@ -17,6 +21,11 @@ const Login = () => {
     const { error } = await supabase.auth.signUp({ email, password })
     setMessage(error ? error.message : '회원가입 성공! 이메일 확인 필요')
   }
+
+	useEffect(() => {
+		window.addEventListener('beforeunload', disconnect);
+		return () => window.removeEventListener('beforeunload', disconnect);
+	}, [socket,disconnect]);
 
   return (
     <div className="flex flex-col p-6">

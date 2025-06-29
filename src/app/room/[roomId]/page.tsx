@@ -23,19 +23,18 @@ export default function Home() {
   const { connect, disconnect } = useSocketStore(state => state.actions);
   const params = useParams();
   const roomId = params.roomId as string;
-  const playlist = usePlaylistStore(state => state.playlist);
   const { setPlaylist, clearPlaylist } = usePlaylistStore(state => state.actions);
   const { setRoomId, clearRoomId } = useUserStore();
   useEffect(() => {
-    if (socket === null) connect();
+    if (!socket) connect();
   }, [socket, connect]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (socket) {
       const Handle = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         clearPlaylist();
         socket.emit('leave_room', roomId);
+				disconnect();
       };
       socket?.on('playlist', (resPlaylist: MusicType[]) => {
         setPlaylist(resPlaylist);
@@ -43,11 +42,6 @@ export default function Home() {
       socket.emit('join_room', roomId);
       socket.emit('get_music', roomId);
       setRoomId(roomId);
-      socket.on('playlist', (resPlaylist: MusicType[]) => {
-        if(playlist!=resPlaylist)
-          setPlaylist(resPlaylist);
-      });
-      
 
       socket.on("room_deleted", () => {
         clearRoomId();
