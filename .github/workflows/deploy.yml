@@ -44,6 +44,7 @@ jobs:
              username: ${{ secrets.USER }}
              key: ${{ secrets.SSH_KEY }}
              script: |
+               source ~/.zshrc
                cd ~/PlayForYou
                
                # 현재 활성 버전 확인
