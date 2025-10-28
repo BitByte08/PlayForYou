@@ -18,9 +18,8 @@ const Sidebar:React.FC = () => {
     <aside className="h-full w-75 min-w-75">
 	    <GlassHighlightContainer className={`h-full w-full rounded-[2rem] py-6 px-4 flex flex-col justify-between`}>
 		    <Container className="flex flex-col gap-2">
-		      <NavBtn to={"/"}>Home</NavBtn>
+		      	<NavBtn to={"/"}>Home</NavBtn>
 			    <NavBtn to={"/room"}>Room</NavBtn>
-			    <NavBtn to={"/login"}>Login</NavBtn>
 		    </Container>
 		    <Modal/>
 	    </GlassHighlightContainer>
